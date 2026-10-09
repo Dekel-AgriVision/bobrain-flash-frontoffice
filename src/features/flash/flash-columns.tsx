@@ -42,15 +42,19 @@ export const flashColumns = (detailBase: string, ability: AppAbility, t: (k: str
       header: 'Station',
       cell: f => (
         <div>
-            <Tip content={t('Activités de la station')}>
-              <Link
-                href={`/activites?station=${encodeURIComponent(f.station)}`}
-                className='font-bold text-dekel-600 hover:underline'
-                onClick={e => e.stopPropagation()}
-              >
-                {f.station}
-              </Link>
-            </Tip>
+           {f.station ? (
+              <Tip content={t('Activités de la station')}>
+                <Link
+                  href={`/activites?station=${encodeURIComponent(f.station)}`}
+                  className='font-bold text-dekel-600 hover:underline'
+                  onClick={e => e.stopPropagation()}
+                >
+                  {/* ...contenu actuel du lien... */}
+                </Link>
+              </Tip>
+            ) : (
+              <span className='font-bold'>—</span>
+            )}
         </div>
       )
     },
