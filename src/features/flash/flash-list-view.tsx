@@ -19,7 +19,7 @@ import { formatFromNow, formatNumber } from '@/lib/format'
 import { norm } from '@/lib/utils'
 import type { Flash, Paginated } from '@/lib/types'
 import { EMPTY_FLASH_FILTERS, FlashFilters } from './flash-filters'
-import { flashColumns } from './flash-columns'
+import { useFlashColumns } from './flash-columns'
 import { flashSearch } from './flash-query'
 import { useT } from '@/i18n/provider'
 
@@ -27,6 +27,7 @@ export default function FlashListView() {
   const t = useT()
   const router = useRouter()
   const qc = useQueryClient()
+  const { columns, canOpen } = useFlashColumns('/flashs')
   const list = useListState({ ...EMPTY_FLASH_FILTERS })
   const [live, setLive] = useState(true)
   const [lastReceived, setLastReceived] = useState<Date | null>(null)
@@ -85,11 +86,11 @@ export default function FlashListView() {
           <FlashFilters value={list.filters} onChange={list.setFilter} />
         </FilterBar>
         <DataTable
-          columns={flashColumns('/flashs')}
+          columns={columns}
           rows={q.data?.data}
           loading={q.isLoading}
           fetching={q.isFetching}
-          onRowClick={f => router.push(`/flashs/${f.id}`)}
+          onRowClick={canOpen ? f => router.push(`/flashs/${f.id}`) : undefined}
           empty={{ icon: Zap, title: 'Aucun flash', description: 'Aucun enregistrement ne correspond aux filtres.' }}
           page={list.page}
           perPage={list.perPage}
