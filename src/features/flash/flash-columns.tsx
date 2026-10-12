@@ -18,7 +18,7 @@ export const flashRights = (ability: AppAbility) => ({
   /** Ouvrir le détail d'un flash (/flashs/:id ou /audit/:id) */
   canOpen: ability.can(SubjectAction.read, Subject.Flash),
   /** Lien vers les activités de la station */
-  canSeeActivities: ability.can(SubjectAction.create, Subject.User)
+  canSeeActivities: ability.can(SubjectAction.read, Subject.User)
 })
 
 export const flashColumns = (detailBase: string, ability: AppAbility, t: (k: string) => string = k => k): Column<Flash>[] => {
