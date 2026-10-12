@@ -16,7 +16,7 @@ import { useT } from '@/i18n/provider'
 /** Droits utilisés par les colonnes de flash */
 export const flashRights = (ability: AppAbility) => ({
   /** Ouvrir le détail d'un flash (/flashs/:id ou /audit/:id) */
-  canOpen: ability.can(SubjectAction.create, Subject.User),
+  canOpen: ability.can(SubjectAction.read, Subject.Flash),
   /** Lien vers les activités de la station */
   canSeeActivities: ability.can(SubjectAction.create, Subject.User)
 })
