@@ -29,7 +29,7 @@ export default function AuditListView() {
     <>
       <PageHeader
         title={t('Audit des flashs')}
-        description={t('Historique complet des événements de pesée. Ouvrez une ligne pour voir sa chronologie et les statistiques de la station.')}
+        description={t('Journal des pesées : une ligne à chaque changement de poids ou de statut, et au moins toutes les 30 s. Ouvrez une ligne pour voir sa chronologie et les statistiques de la station.')}
       />
       <Card className='overflow-hidden'>
         <CardHeader>
@@ -38,7 +38,7 @@ export default function AuditListView() {
             <CardDescription>{t('{n} événement(s)', { n: formatNumber(q.data?.total ?? 0) })}</CardDescription>
           </div>
         </CardHeader>
-        <FilterBar activeCount={list.activeCount} onReset={list.reset} right={<SearchInput value={list.search} onChange={list.setSearch} placeholder={t('Référence, ticket, poste…')} />}>
+        <FilterBar activeCount={list.activeCount} onReset={list.reset} right={<SearchInput value={list.search} onChange={list.setSearch} placeholder={t('Référence, ticket, trame…')} />}>
           <FlashFilters value={list.filters} onChange={list.setFilter} withDates />
         </FilterBar>
         <DataTable

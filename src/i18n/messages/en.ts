@@ -453,6 +453,16 @@ const en: Record<string, string> = {
   '(vous)': '(you)',
   'Flashs / pesées': 'Flashes / weighings',
   '8 caractères min., avec majuscule, minuscule, chiffre et caractère spécial (!@#$%^&*).': 'At least 8 characters, with an uppercase letter, a lowercase letter, a digit and a special character (!@#$%^&*).',
+  "Journal des pesées : une ligne à chaque changement de poids ou de statut, et au moins toutes les 30 s. Ouvrez une ligne pour voir sa chronologie et les statistiques de la station.": "Weighing log: one row whenever the weight or status changes, and at least every 30 s. Open a row to see its timeline and the station statistics.",
+  "Référence, ticket, trame…": "Reference, ticket, frame…",
+  "Résumé journalier": "Daily summary",
+  "14 derniers jours de {station}": "Last 14 days of {station}",
+  "Aucun résumé sur la période.": "No summary for this period.",
+  "Jour": "Day",
+  "Trames": "Frames",
+  "Journal": "Log",
+  "Toutes les trames reçues de la station, y compris les répétitions": "All frames received from the station, including repeats",
+  "Lignes conservées dans le journal : changements de poids ou de statut, et battements": "Rows kept in the log: weight or status changes, and heartbeats",
 }
 
 export default en

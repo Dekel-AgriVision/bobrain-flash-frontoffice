@@ -15,9 +15,9 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Tip } from '@/components/ui/tooltip'
 import { services } from '@/lib/services'
 import { statusLabel, statusTone } from '@/lib/constants'
-import { flashDate, formatCalendar, formatDateTime, formatDayLabel, formatFromNow, formatNumber, formatTime, formatWeight } from '@/lib/format'
+import { flashDate, formatCalendar, formatDate, formatDateTime, formatDayLabel, formatFromNow, formatNumber, formatTime, formatWeight } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import type { AuditFlashStats, Flash } from '@/lib/types'
+import type { AuditFlashStats, Flash, WeightDaily } from '@/lib/types'
 import { FlashInfo, WeightHero } from '@/features/flash/flash-info'
 import { FrameBlock } from '@/features/flash/frame-block'
 import { useT } from '@/i18n/provider'
@@ -69,6 +69,58 @@ function Stats({ stats }: { stats?: AuditFlashStats }) {
           })}
         </div>
       </div>
+    </div>
+  )
+}
+
+/**
+ * Résumé journalier de la station (weight_daily) : trames reçues vs lignes conservées
+ * dans le journal. Ces résumés sont gardés sans limite, le détail 12 mois (ADR-0022 de l'API).
+ */
+function DailySummary({ branch, station }: { branch?: string; station?: string }) {
+  const t = useT()
+  const q = useQuery({
+    queryKey: ['audit-daily', branch, station],
+    queryFn: () => services.audit.daily(branch as string, station as string, 14),
+    enabled: !!branch && !!station
+  })
+  const rows: WeightDaily[] = q.data ?? []
+
+  if (q.isLoading) return <Skeleton className='h-40' />
+  if (!rows.length) return <p className='text-sm text-muted-foreground'>{t('Aucun résumé sur la période.')}</p>
+
+  return (
+    <div className='-mx-1 overflow-x-auto'>
+      <table className='w-full text-[0.8rem]'>
+        <thead>
+          <tr className='text-left text-[0.68rem] uppercase tracking-wider text-muted-foreground'>
+            <th className='px-1 pb-2 font-semibold'>{t('Jour')}</th>
+            <th className='px-1 pb-2 text-right font-semibold'>
+              <Tip content={t('Toutes les trames reçues de la station, y compris les répétitions')}>
+                <span>{t('Trames')}</span>
+              </Tip>
+            </th>
+            <th className='px-1 pb-2 text-right font-semibold'>
+              <Tip content={t('Lignes conservées dans le journal : changements de poids ou de statut, et battements')}>
+                <span>{t('Journal')}</span>
+              </Tip>
+            </th>
+            <th className='px-1 pb-2 text-right font-semibold'>{t('Min')}</th>
+            <th className='px-1 pb-2 text-right font-semibold'>{t('Max')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr key={r.day} className='border-t border-border/60'>
+              <td className='px-1 py-1.5'>{formatDate(r.day)}</td>
+              <td className='tabular px-1 py-1.5 text-right'>{formatNumber(r.framesCount)}</td>
+              <td className='tabular px-1 py-1.5 text-right'>{formatNumber(r.rowsCount)}</td>
+              <td className='tabular px-1 py-1.5 text-right'>{formatWeight(r.weightMin)}</td>
+              <td className='tabular px-1 py-1.5 text-right'>{formatWeight(r.weightMax)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
@@ -255,6 +307,18 @@ export default function AuditDetailView({ id }: { id: string }) {
             </CardHeader>
             <CardContent>
               <Stats stats={stats} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <div>
+                <CardTitle>{t('Résumé journalier')}</CardTitle>
+                <CardDescription>{t('14 derniers jours de {station}', { station: audit.station ?? '—' })}</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <DailySummary branch={audit.branch} station={audit.station} />
             </CardContent>
           </Card>
         </div>

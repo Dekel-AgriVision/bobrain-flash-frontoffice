@@ -121,6 +121,21 @@ export interface AuditFlashStats {
   byStatus: { status: string; count: number }[]
 }
 
+/** Résumé journalier d'une station (table weight_daily, ADR-0022 de l'API) */
+export interface WeightDaily {
+  day: string
+  branch: string
+  station: string
+  /** Toutes les trames reçues, y compris les doublons non conservés dans le journal */
+  framesCount: number
+  /** Lignes conservées dans le journal (changements de poids/statut + battements) */
+  rowsCount: number
+  weightCount: number
+  weightMin: number | null
+  weightMax: number | null
+  weightSum: string | number
+}
+
 export interface AuditFlashDetails {
   audit: Flash
   previous: Flash | null

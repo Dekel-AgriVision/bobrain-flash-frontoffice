@@ -453,6 +453,16 @@ const he: Record<string, string> = {
   '(vous)': '(את/ה)',
   'Flashs / pesées': 'פלאשים / שקילות',
   '8 caractères min., avec majuscule, minuscule, chiffre et caractère spécial (!@#$%^&*).': 'לפחות 8 תווים, כולל אות גדולה, אות קטנה, ספרה ותו מיוחד (!@#$%^&*).',
+  "Journal des pesées : une ligne à chaque changement de poids ou de statut, et au moins toutes les 30 s. Ouvrez une ligne pour voir sa chronologie et les statistiques de la station.": "יומן השקילות: שורה בכל שינוי משקל או סטטוס, ולפחות כל 30 שניות. פתחו שורה כדי לראות את ציר הזמן ואת סטטיסטיקות התחנה.",
+  "Référence, ticket, trame…": "אסמכתה, כרטיס, מסגרת…",
+  "Résumé journalier": "סיכום יומי",
+  "14 derniers jours de {station}": "14 הימים האחרונים של {station}",
+  "Aucun résumé sur la période.": "אין סיכום לתקופה זו.",
+  "Jour": "יום",
+  "Trames": "מסגרות",
+  "Journal": "יומן",
+  "Toutes les trames reçues de la station, y compris les répétitions": "כל המסגרות שהתקבלו מהתחנה, כולל חזרות",
+  "Lignes conservées dans le journal : changements de poids ou de statut, et battements": "שורות שנשמרו ביומן: שינויי משקל או סטטוס, ופעימות",
 }
 
 export default he
